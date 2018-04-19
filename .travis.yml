@@ -10,7 +10,7 @@ env:
   - ZEFREPO="https://github.com/ugexe/zef.git"
 sudo: required
 install:
-  - sudo apt-get -q update && sudo apt-get -u -y -q dist-upgrade
+  - sudo apt-get -q update
   - sudo apt-get install -q -y $DEPS
   - wget https://rakudo.perl6.org/downloads/rakudo/rakudo-$VERSION.tar.gz
   - mkdir /var/tmp/rakudo && tar xzf *.tar.gz -C /var/tmp/rakudo --strip=1
