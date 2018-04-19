@@ -25,8 +25,8 @@ script:
   - cd /var/tmp && git clone --depth=1 $ZEFREPO && cd zef
   - sudo $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
   - sudo ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
-  - export PATH=/opt/rakudo-pkg-for-doc/bin:$PATH
-  - cd /var/tmp/doc && sudo "PATH=$PATH" zef --deps-only install .
+  - export PATH=/opt/rakudo-pkg-for-doc/bin:$PATH && echo $PATH
+  - cd /var/tmp/doc && sudo "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --deps-only install .
   - cd / && sudo fpm \
             --deb-no-default-config-files \
             --license 'Artistic License 2.0' \
