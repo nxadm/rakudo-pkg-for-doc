@@ -9,6 +9,7 @@ env:
   - PREFIX="/opt/rakudo-pkg-for-doc"
   - DOCREPO="https://github.com/perl6/doc.git"
   - ZEFREPO="https://github.com/ugexe/zef.git"
+  - PATH="/opt/rakudo-pkg-for-doc/bin:$PATH"
 sudo: required
 install:
   - sudo apt-get -q update
@@ -22,10 +23,10 @@ script:
   - sudo make test
   - sudo make install
   - cd /var/tmp && git clone --depth=1 $ZEFREPO && cd zef
-  - $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
-  - ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
+  - sudo $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
+  - sudo ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
   - cd /var/tmp/doc
-  - zef --deps-only install .
+  - sudo zef --deps-only install .
   - cd /
   - sudo fpm \
         --deb-no-default-config-files \
@@ -41,8 +42,9 @@ script:
         --url 'https://perl6.org' \
         --architecture native \
         $PREFIX
-  - ls -la *.deb
+  - ls -la /var/tmp/*.deb
   - sudo dpkg -i /var/tmp/*.deb
+  - perl6 -v
 before_deploy: perl -pi -e "s/__DATE__/${DATE}/; s/__VERSION__/${VERSION}/; s/__REVISION__/${REVISION}/" .bintray.json
 deploy:
   provider: bintray
