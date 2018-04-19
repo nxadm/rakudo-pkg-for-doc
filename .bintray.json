@@ -1,0 +1,35 @@
+{
+    "package": {
+        "name": "rakudo-pkg-for-doc",
+        "repo": "perl6-doc",
+        "subject": "nxadm",
+        "desc": "Rakudo Perl 6 runtime",
+        "website_url": "https://github.com/nxadm/rakudo-pkgf-for-doc",
+        "issue_tracker_url": "https://github.com/nxadm/rakudo-pkg-for-doc",
+        "vcs_url": "https://github.com/nxadm/rakudo-pkg-for-doc",
+        "licenses": ["GPL-3.0", "Artistic-License-2.0"],
+        "public_download_numbers": false,
+        "public_stats": false
+    },
+
+    "version": {
+        "name": "__VERSION__-__REVISION__",
+        "desc": "Version",
+        "released": "__DATE__",
+        "vcs_tag": "__VERSION__-__REVISION__",
+        "gpgSign": false
+    },
+
+  "files":
+      [
+        {
+        "includePattern": "/var/tmp/(*.deb)", "uploadPattern": "pool/main/r/rakudo-pkg-for-doc/$1",
+          "matrixParams": {
+              "deb_distribution": "trusty",
+              "deb_component": "main",
+              "deb_architecture": "amd64"
+          }
+        }
+  ],
+    "publish": true
+}
