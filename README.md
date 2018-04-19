@@ -15,7 +15,7 @@ To use the packages add this to the .travis.yml:
 ```yaml
 env:
   global:
-    - PATH="/opt/rakudo-pkg-for-doc/bin:$PATH"
+    - PATH="/opt/rakudo-pkg-for-doc/bin:/opt/rakudo-pkg-for-doc/share/perl6/site/bin:$PATH"
 sudo: required
 install:
   - echo "deb https://dl.bintray.com/nxadm/perl6-doc trusty main" | sudo tee -a /etc/apt/sources.list
