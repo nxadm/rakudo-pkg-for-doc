@@ -10,9 +10,6 @@ env:
   - DOCREPO="https://github.com/perl6/doc.git"
   - ZEFREPO="https://github.com/ugexe/zef.git"
 sudo: required
-cache:
-  directories:
-    - /opt/rakudo-pkg-for-doc
 install:
   - set -e
   - sudo apt-get -q update
