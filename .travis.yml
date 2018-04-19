@@ -1,25 +1,44 @@
 language: generic
 env:
   global:
-  - TAG_VERSION=2018.03.1-01 
+  - VERSION="2018.03.1" 
+  - REVISION="01"
+  - MANTAINER="Claudio Ramirez <pub.claudio@gmail.com>"
+  - DEPS="build-essential git graphviz lsb-release ruby wget ruby-dev"
+  - PREFIX="/opt/rakudo-pkg-for-doc"
+  - DOCREPO="https://github.com/perl6/doc.git"
+  - ZEFREPO="https://github.com/ugexe/zef.git"
 sudo: required
-services:
-- docker
-install: wget $RAKUDO_DEB && sudo dpkg -i *.deb
+install: 
+  - sudo apt-get update
+  - sudo apt-get install -y $DEPS
+  - wget https://rakudo.perl6.org/downloads/rakudo/rakudo-$VERSION.tar.gz
+  - tar xzf *.tar.gz -C /var/tmp/rakudo --strip=1
+  - cd /var/tmp && git clone $DOCREPO
 script:
-    - wget https://github.com/nxadm/rakudo-pkg/releases/download/v$TAG_VERSION/rakudo-pkg-Ubuntu14.04_${TAG_VERSION}_amd64.deb
-    - docker run -e TAG_VERSION=$TAG_VERSION -v rakudo-pkg-for-doc:/pkg ubuntu:trusty repkg_rakudo.pl
-deploy:
-  provider: releases
-  prerelease: true
-  api_key:
-    secure: kZZIX3JLoAowpJgQXUheKMquNtnPUNa18SFQQSYaQe3OjaBLzJGuI/Dv+eju3dZA9HWXVVfAl/EBYmx0YRyIa8XPoKL+hxbl29sdcP7wNi4OJsIcYr2dY7dcPY2T1RIWCd2cU7CXbJ1IquDN67asWEBxbpwpZluYDd9odx2JMeMAf2XX+VQjFxwK92hGrpLMdtzNstSiZvYn7inBTOU8nrBxQVccd7ec9ZsF8PUjohazUzpCHYvHgZOPHQZY1UgOD1KlrUmPtUToakDOnXyysZBvC3YBq833eqBXIlaoCELnFdzOnwIQzewxYgXrz4JQQhUmXPIvmylM0MoNp1MnkANs68oECBLvOB8kxOglIYWBad6GtaR5pkLhh3bPwc6fwqZZQMoqlncesKDPtHvmtQmWpWFxbwYsOFgFDcc3jW8DV233EbpubrREbrYFq83Ahc0aYx+GpNWFZ71jlXcErZ7tB/KltHWoCjLPq1dxCIFiq/AOLylK9meo/AQF+RXAb5+3fkd32X5xyRQejYfdhGxZ/c6QkV4C3BAIypJ76Hi0MfePuylMTe4P59nkT98j6ef3d8MtPHIM8DdBww6erseteKCaS0fZaf3e3YBhG9TJYLTHri4o/StCnqTMyiANEcsNoQB3oFC3z5Q76jYHocKo5g+z/6/ooeipn03hKsA=
-  file_glob: true
-  file: "/pkg/*.deb"
-  skip_cleanup: true
-  on:
-    repo: nxadm/rakudo-pkg-for-doc
-    tags: true
-  branches:
-    only:
-      - 'latest'
+  - cd /var/tmp/rakudo
+  - sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
+  - sudo make test
+  - sudo make install
+  - cd /var/tmp && git clone $ZEFREPO && cd zef
+  - $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
+  - ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
+  - cd /var/tmp/doc
+  - zef --deps-only install .
+  - cd /
+  - sudo fpm \
+        --deb-no-default-config-files \
+        --license 'Artistic License 2.0' \
+        --description 'Rakudo Perl 6 runtime for perl6/doc CI' \
+        --input-type dir \
+        --output-type deb \
+        --package /var/tmp \
+        --name rakudo-pkg-for-doc \
+        --maintainer $MAINTAINER \
+        --version $VERSION \
+        --iteration $REVISION \
+        --url 'https://perl6.org \
+        --architecture native \
+        $PREFIX
+  - ls -la *.deb
+  - sudo dpkg -i /var/tmp/*.deb
