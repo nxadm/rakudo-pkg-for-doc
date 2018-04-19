@@ -21,13 +21,14 @@ install:
   - sudo gem install --no-ri --no-rdoc fpm
 script:
   - cd /var/tmp/rakudo && sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
+  - sudo make
   # - sudo make test
   - sudo make install
   - cd /var/tmp && git clone --depth=1 $ZEFREPO && cd zef
   - sudo $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
   - sudo ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
   - cd /var/tmp/doc && sudo "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --deps-only install .
-  - cd / && sudo "GEM_HOME=$GEM_HOME" $GEM_HOME/fpm \
+  - cd / && sudo "GEM_HOME=$GEM_HOME" $GEM_HOME/bin/fpm \
             --deb-no-default-config-files \
             --license 'Artistic License 2.0' \
             --description 'Rakudo Perl 6 runtime for perl6/doc CI' \
