@@ -1,7 +1,7 @@
 language: generic
 env:
   global:
-  - VERSION="2018.03" 
+  - VERSION="2018.03"
   - REVISION="01"
   - MANTAINER="Claudio Ramirez <pub.claudio@gmail.com>"
   - DEPS="build-essential git graphviz lsb-release ruby wget ruby-dev"
@@ -9,18 +9,18 @@ env:
   - DOCREPO="https://github.com/perl6/doc.git"
   - ZEFREPO="https://github.com/ugexe/zef.git"
 sudo: required
-install: 
+install:
   - sudo apt-get update && sudo apt-get -u dist-upgrade -y
   - sudo apt-get install -y $DEPS
   - wget https://rakudo.perl6.org/downloads/rakudo/rakudo-$VERSION.tar.gz
   - mkdir /var/tmp/rakudo && tar xzf *.tar.gz -C /var/tmp/rakudo --strip=1
-  - cd /var/tmp && git clone $DOCREPO
+  - cd /var/tmp && git clone --depth=1 $DOCREPO
 script:
   - cd /var/tmp/rakudo
   - sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
   - sudo make test
   - sudo make install
-  - cd /var/tmp && git clone $ZEFREPO && cd zef
+  - cd /var/tmp && git clone --depth= 1 $ZEFREPO && cd zef
   - $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
   - ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
   - cd /var/tmp/doc
