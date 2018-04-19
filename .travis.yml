@@ -5,7 +5,7 @@ env:
   - REVISION="01"
   - DATE=`date +%Y%m%d`
   - MANTAINER="Claudio Ramirez <pub.claudio@gmail.com>"
-  - DEPS="build-essential git graphviz lsb-release ruby wget ruby-dev"
+  - DEPS="build-essential git lsb-release ruby wget ruby-dev"
   - PREFIX="/opt/rakudo-pkg-for-doc"
   - DOCREPO="https://github.com/perl6/doc.git"
   - ZEFREPO="https://github.com/ugexe/zef.git"
