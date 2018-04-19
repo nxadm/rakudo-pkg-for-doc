@@ -25,4 +25,4 @@ install:
 ## New builds
 
 In .travis.yml, bump the version and create a branch with the name
-v<version>-<revison>, e.g. v2018.02.1-01, v2018.03-01.
+v\<version>-\<revison>, e.g. v2018.02.1-01, v2018.03-01.
