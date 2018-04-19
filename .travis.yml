@@ -20,7 +20,7 @@ script:
   - sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
   - sudo make test
   - sudo make install
-  - cd /var/tmp && git clone --depth= 1 $ZEFREPO && cd zef
+  - cd /var/tmp && git clone --depth=1 $ZEFREPO && cd zef
   - $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
   - ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
   - cd /var/tmp/doc
