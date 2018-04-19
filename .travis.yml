@@ -3,6 +3,7 @@ env:
   global:
   - VERSION="2018.03"
   - REVISION="01"
+  - DATE=`date +%Y%m%d`
   - MANTAINER="Claudio Ramirez <pub.claudio@gmail.com>"
   - DEPS="build-essential git graphviz lsb-release ruby wget ruby-dev"
   - PREFIX="/opt/rakudo-pkg-for-doc"
@@ -37,8 +38,16 @@ script:
         --maintainer $MAINTAINER \
         --version $VERSION \
         --iteration $REVISION \
-        --url 'https://perl6.org \
+        --url 'https://perl6.org' \
         --architecture native \
         $PREFIX
   - ls -la *.deb
   - sudo dpkg -i /var/tmp/*.deb
+before_deploy: perl -pi -e "s/__DATE__/${DATE}/; s/__VERSION__/${VERSION}/; s/__REVISION__/${REVISION}/" .bintray.json
+deploy:
+  provider: bintray
+  file: .bintray.json
+  skip_cleanup: true
+  user: nxadm
+  key:
+    secure: ws6L7j9JZSCwxCEdOYj1aFMxhO83JBXlKpuzRrd1Wp5AF7W4xpnR+O6xxL1Ix+ouWXEhZz9o9SoMIneQrG2+PJAdOob3wlfA/z+dgtBBhGgFn+CWy5l0G31FWY7hz9PnQYCCWlXq+ZMYT4i5RLHd9k7Lt2GwBzwkdPowfCzxw3MGnXIi/imBF1ahsNItRuOQ6KI/KhRbEKdaiAzOPghdyQGC0iyMkhFaOysyMlUxc2ZgPVaJfpgw1GDHZFs3KLSnxk8JYAl9PQbsYcmskjU+aKNYGdLB2ro8TUzBoblhM1MFC7aVzeP4P2tY7nSUbEx+1WCX5eXXb3fjPnUqscuD4ztoJEpfaG0DqzcvlKuIQqY3ESC2ceeH3lP4PXkZwwPCz7TlBV7fGo2YffuVOtjrQ9UdQgRfN5G4bVx8M2Qvk8am/rlu2PYkvbMtFnIjfRol3PN6jRvfgb6DSYZerWI5Bp6vdSmfTgX3/0evC8WDEF0XRVmn9maJIXmNwJMekFyD/PJZFm1AZ83E+0OJinPGC3UrvS49ygeJP7bEpuf3mRkqqiHOrc/P5ySYjU71EUAVy6IsmOa7iiPWXW+EULpzW/+9fd+yl69exk/BqwZwJiEoRhsmPNtVRyIPhmAWvzIistehfXjSiv/jd81gahAaGOkNTtJy/w7yeMGQ1LLk8l4=
