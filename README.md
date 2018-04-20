@@ -18,6 +18,7 @@ env:
     - PATH="/opt/rakudo-pkg-for-doc/bin:/opt/rakudo-pkg-for-doc/share/perl6/site/bin:$PATH"
 sudo: required
 install:
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 379CE192D401AB61
   - echo "deb https://dl.bintray.com/nxadm/perl6-doc trusty main" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update && sudo apt-get install rakudo-pkg-for-doc
 ```
