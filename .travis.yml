@@ -22,7 +22,7 @@ install:
 script:
   - cd /var/tmp/rakudo && sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
   - sudo make
-  # - sudo make test
+  - sudo make test
   - sudo make install
   - cd /var/tmp && git clone --depth=1 $ZEFREPO && cd zef
   - sudo $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
@@ -41,9 +41,9 @@ deploy:
   user: nxadm
   key:
     secure: "BX5DjWon0RPy5DTgOJsrYnjsO72yEHRReH74Socw4sg91XnYdrJID0RoWveJAV9VpLieiF62R80viL2agQgg8oR7e45YCe+dWEoMnVI7PKUJqh/lcw++/tSMMk2KrzlLhMnKOOfEU1c2iH7DDRV8MY41FYbOnFneey317BgimgZBIm1gwQwgiQevVJHJwmUoV33+BQq0jpXJS2aTztdT2MhAIDarKfkfxItqVVj0auaFk7v7LaMMJPg0E546CNC+xWbPp6U17vBHjMWZ3WSV9cCOD6n76hlmrazoWU8/PSsH9uQTMRxMFyik7SQp9GoaB0/5OlGKbZk8MoxFSlJ/RXtk/bDLE9N6ziIMhaJlglMUvp3fB5HdoDVz/lHoL91Up1xIZG9QyZdio7rpThoxmBZt3YFs9tiVOcr7ceVZFXNB5FFP9e+gmcyPhXswTpnRevGRpL2Bn5rzj7F2PWRWS5Q2VYPa4ZW1838OdWbeLm+R0NRqA7LxM/c6cQz/yFlMjFDyWJcAi8wx6KDyyCrQOaTrRaxPDivP1Q8CrB7SX8Ka5TOc+JHao2QUjUN3X1EKZ1XvSp+80Yg9nSSJTHc/JkaT7HsY8Juq3SC+afKtks7GHxPHQ7yL0isFV+6srOlZTYaa0dpRoRX3pzTmcryHHKu/Hz5KBJr9rHu0fFbcY2s="  
-  #on:
-  #  repo: nxadm/rakudo-pkg-for-doc
-  #  tags: true
-  #branches:
-  #  only:
-  #    - /^v20\d{2}\.\d{2}(\.\d+)?-\d+$/
+  on:
+    repo: nxadm/rakudo-pkg-for-doc
+    tags: true
+  branches:
+    only:
+      - /^v20\d{2}\.\d{2}(\.\d+)?-\d+$/

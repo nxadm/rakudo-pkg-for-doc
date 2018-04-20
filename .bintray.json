@@ -23,7 +23,7 @@
   "files":
       [
         {
-        "includePattern": "/var/tmp/(rakudo-pkg-for-doc+*\.deb)\b", "uploadPattern": "pool/main/r/rakudo-pkg-for-doc/$1",
+        "includePattern": "/var/tmp/(rakudo-pkg-for-doc.*\.deb)\b", "uploadPattern": "pool/main/r/rakudo-pkg-for-doc/$1",
           "matrixParams": {
               "deb_distribution": "trusty",
               "deb_component": "main",
