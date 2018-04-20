@@ -31,7 +31,7 @@ script:
   - sudo $PREFIX/bin/perl6 -Ilib bin/zef --install-to=perl install .
   - sudo ln -s $PREFIX/share/perl6/bin/zef $PREFIX/bin/zef
   - cd /var/tmp/doc && sudo "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --deps-only install .
-  - cd / && sudo "GEM_HOME=$GEM_HOME" $GEM_HOME/bin/fpm \
+  - cd / && sudo "GEM_HOME=$GEM_HOME" $GEM_HOME/wrappers/fpm \
             --deb-no-default-config-files \
             --license 'Artistic License 2.0' \
             --description 'Rakudo Perl 6 runtime for perl6/doc CI' \
