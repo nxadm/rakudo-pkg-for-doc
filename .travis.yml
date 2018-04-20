@@ -18,12 +18,12 @@ install:
   - sudo apt-get -q update
   - sudo apt-get install -q -y $DEPS
   - wget https://rakudo.perl6.org/downloads/rakudo/rakudo-$VERSION.tar.gz
-  - mkdir /var/tmp/rakudo && tar xzf *.tar.gz -C /var/tmp/rakudo --strip=1
-  - cd /var/tmp && git clone --depth=1 $DOCREPO
+  #- mkdir /var/tmp/rakudo && tar xzf *.tar.gz -C /var/tmp/rakudo --strip=1
+  #- cd /var/tmp && git clone --depth=1 $DOCREPO
   #- sudo "GEM_HOME=$GEM_HOME" $GEM_HOME/wrappers/gem install --no-ri --no-rdoc fpm executable-hooks
   #- sudo "GEM_HOME=$GEM_HOME" $GEM_HOME/wrappers/gem regenerate_binstubs
   - sudo /usr/bin/gem install --no-ri --no-rdoc fpm executable-hooks
-  - sudo find / -name fpm
+  - sudo /home/travis/.rvm/gems/ruby-2.4.1/gems/fpm-1.9.3/bin/fpm -h
   - false
 script:
   - cd /var/tmp/rakudo && sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
