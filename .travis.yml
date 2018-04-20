@@ -21,7 +21,7 @@ install:
   - mkdir /var/tmp/rakudo && tar xzf *.tar.gz -C /var/tmp/rakudo --strip=1
   - cd /var/tmp && git clone --depth=1 $DOCREPO
   - sudo gem install --no-ri --no-rdoc fpm executable-hooks
-  - sudo which gem
+  - sudo find / -name "gem"
   - sudo find / -name "fpm" && false
 script:
   - cd /var/tmp/rakudo && sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
