@@ -1,4 +1,6 @@
-language: generic
+language: ruby
+rvm:
+  - 2.4.1
 env:
   global:
     - VERSION="2018.03"
