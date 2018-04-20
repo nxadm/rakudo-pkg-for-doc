@@ -4,7 +4,7 @@
         "repo": "perl6-doc",
         "subject": "nxadm",
         "desc": "Rakudo Perl 6 runtime",
-        "website_url": "https://github.com/nxadm/rakudo-pkgf-for-doc",
+        "website_url": "https://github.com/nxadm/rakudo-pkg-for-doc",
         "issue_tracker_url": "https://github.com/nxadm/rakudo-pkg-for-doc",
         "vcs_url": "https://github.com/nxadm/rakudo-pkg-for-doc",
         "licenses": ["GPL-3.0", "Artistic-License-2.0"],
@@ -23,7 +23,7 @@
   "files":
       [
         {
-        "includePattern": "/var/tmp/(.*\.deb)", "uploadPattern": "pool/main/r/rakudo-pkg-for-doc/$1",
+        "includePattern": "/var/tmp/(.+?\.deb)", "uploadPattern": "pool/main/r/rakudo-pkg-for-doc/$1",
           "matrixParams": {
               "deb_distribution": "trusty",
               "deb_component": "main",
