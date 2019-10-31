@@ -14,6 +14,7 @@ env:
 sudo: required
 install:
   - set -e
+  - id
   - sudo apt-get -q update
   - sudo apt-get install -q -y $DEPS
   - wget https://rakudo.perl6.org/downloads/rakudo/rakudo-$VERSION.tar.gz
