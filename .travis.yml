@@ -10,7 +10,7 @@ env:
     - DOCREPO="https://github.com/perl6/doc.git"
     - ZEFREPO="https://github.com/ugexe/zef.git"
     - PATH="/opt/rakudo-pkg-for-doc/bin:/opt/rakudo-pkg-for-doc/share/perl6/site/bin:$PATH"
-    - FPM="/home/travis/.rvm/gems/ruby-2.4.1/gems/fpm-1.9.3/bin/fpm"
+    - FPM=$(ls -1 /home/travis/.rvm/gems/ruby-*/bin/fpm)
     - secure: "Rh31qrnCOND4Cll6JH3P3PDAO4zNrWTwXlbmTEo1u/G6Stbs3Njue3/6Hq5B0udlEPwoM4w3v/VwGN4VELhMC3slav2ch/8nd/xFcbCEAYjubhdvo0R2YlW0GGOfsmRZxt0t/dabWbE9zHCO9nFYMhs0gjOExdOA+qiCXXp33ssqRxC4bW9u3r5ng4MKshXUQaDCQI/7H7bnsdST8G9+/YvNbKwPLoJGc/yvvqKUorYupyzs4IdIIUK4zqNrRzlIQOE6u+IUKPSImb8DHv0PWh56p2RHI6ydN3TIjwBEdmRIqCPL0yPcR1Sk6QtT7xjUYDd6tq5+SmjxQlodORXRIQAWbIJVkso9bplDRYrjBNd4SDD0aXVpcbLJmKXBC48X6Z9zoV6roekRaxU7c7sJfrf76/5C/CTW/FNtKfkkKtatoO69cFwpxlCsd91L2cFYoV/w8fFYZfG2Njr1ZjDMiO1uLqWfXBIjos2Y25hdphMvMqM8/rCGwl5BGObba3SddfU1cLbqImCujdFZoI+X2O4lYsQ2vc/yNjDzMpywAhUP4W7iDjtIt5H21IeOdkM9FPIC2kRXlizejCMYAvTAvq+iPVIAyyf2cVzr6PQ0Wy+YAJm5Gxq9/4NK6fon9yOSmN0X9rIVTEkldq4ohfEF/8gJiBurhHBZNP1NgCdSvI8="
 sudo: required
 install:
@@ -23,7 +23,6 @@ install:
   - git clone --depth=1 $DOCREPO
   - git clone --depth=1 $ZEFREPO
   - sudo /usr/bin/gem install --no-ri --no-rdoc fpm executable-hooks
-  - find /home/travis/.rvm/gems -name "fpm" -type f
 script:
   - cd /var/tmp/rakudo
   - sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
