@@ -32,7 +32,7 @@ script:
   - perl6 -v
   - cd /var/tmp/zef && sudo /opt/rakudo-pkg-for-doc/bin/perl6 -Ilib bin/zef install -to=core .
   - sudo ln -s $PREFIX/share/perl6/core/bin/zef $PREFIX/bin/zef
-  - cd /var/tmp/doc && sudo env "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --deps-only install .
+  - cd /var/tmp/doc && sudo env "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --verbose --deps-only install .
   - cd / && sudo $FPM --deb-no-default-config-files --license 'Artistic License 2.0' --description 'Rakudo Perl 6 runtime for perl6/doc CI' --input-type dir --output-type deb --package /var/tmp --name rakudo-pkg-for-doc --maintainer "$MAINTAINER" --version $VERSION --iteration $REVISION --url 'https://perl6.org' --architecture native $PREFIX
 before_deploy: sudo chown -R travis:travis /home/travis/ $TRAVIS_BUILD_DIR && cd /
 deploy:
