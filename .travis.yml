@@ -18,7 +18,7 @@ install:
   - sudo apt-get install -q -y $DEPS
   - wget https://rakudo.perl6.org/downloads/rakudo/rakudo-$VERSION.tar.gz
   - sudo mkdir -p /work /pkg && sudo chown travis:travis /work /pkg
-  - tar xzf *.tar.gz -C /work/rakudo --strip=1
+  - mkdir /work/rakudo && tar xzf *.tar.gz -C /work/rakudo --strip=1
   - cd /work
   - git clone --depth=1 $DOCREPO
   - git clone --depth=1 $ZEFREPO
