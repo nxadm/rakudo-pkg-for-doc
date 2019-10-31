@@ -36,7 +36,7 @@ script:
   - sudo ln -s $PREFIX/share/perl6/core/bin/zef $PREFIX/bin/zef
   - cd /work/doc && sudo env "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --verbose --deps-only install .
   - export FPM=$(ls -1 /home/travis/.rvm/gems/ruby-*/gems/fpm-*/bin/fpm) && cd / && sudo $FPM --deb-no-default-config-files --license 'Artistic License 2.0' --description 'Rakudo Perl 6 runtime for perl6/doc CI' --input-type dir --output-type deb --package /pkg --name rakudo-pkg-for-doc --maintainer "$MAINTAINER" --version $VERSION --iteration $REVISION --url 'https://perl6.org' --architecture native $PREFIX
-before_deploy: sudo chown -R travis:travis /home/travis /pkg/* $TRAVIS_BUILD_DIR && cd /
+before_deploy: sudo chown -R travis:travis /home/travis /pkg/* $TRAVIS_BUILD_DIR && cd
 deploy:
   provider: releases
   api_key:
