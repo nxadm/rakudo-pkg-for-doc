@@ -51,4 +51,4 @@ deploy:
       only:
         - /^v20\d{2}\.\d{2}(\.\d+)?(-\d+)?$/
 after_deploy:
-  - cd /var/tmp/rakudo-pkg; export FILE=`ls -1 *.deb`; curl -T $FILE -unxadm:$BINTRAY_API "https://api.bintray.com/content/nxadm/perl6-doc/rakudo-pkg-for-doc/${RAKUDO_VERSION}-${REVISION}/pool/main/r/rakudo-pkg-for-doc/$FILE;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - cd /pkg; export FILE=`ls -1 *.deb`; curl -T $FILE -unxadm:$BINTRAY_API "https://api.bintray.com/content/nxadm/perl6-doc/rakudo-pkg-for-doc/${RAKUDO_VERSION}-${REVISION}/pool/main/r/rakudo-pkg-for-doc/$FILE;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
