@@ -23,6 +23,7 @@ install:
   - git clone --depth=1 $DOCREPO
   - git clone --depth=1 $ZEFREPO
   - sudo /usr/bin/gem install --no-ri --no-rdoc fpm executable-hooks
+  - find /home/travis/.rvm/gems -name "fpm" -type f
 script:
   - cd /var/tmp/rakudo
   - sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
