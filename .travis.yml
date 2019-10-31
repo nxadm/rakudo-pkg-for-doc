@@ -34,7 +34,7 @@ script:
   - sudo ln -s $PREFIX/share/perl6/core/bin/zef $PREFIX/bin/zef
   - cd /var/tmp/doc && sudo env "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --verbose --deps-only install .
   - export FPM=$(ls -1 /home/travis/.rvm/gems/ruby-*/gems/fpm-*/bin/fpm) && cd / && sudo $FPM --deb-no-default-config-files --license 'Artistic License 2.0' --description 'Rakudo Perl 6 runtime for perl6/doc CI' --input-type dir --output-type deb --package /var/tmp --name rakudo-pkg-for-doc --maintainer "$MAINTAINER" --version $VERSION --iteration $REVISION --url 'https://perl6.org' --architecture native $PREFIX
-before_deploy: sudo chown -R $UID:$UID /home/travis/ $TRAVIS_BUILD_DIR && cd /
+before_deploy: sudo chown -R travis:travis /home/travis $TRAVIS_BUILD_DIR && cd /
 deploy:
   provider: releases
   api_key:
@@ -47,6 +47,6 @@ deploy:
     tags: true
     branches:
       only:
-        - /^v20\d{2}\.\d{2}(\.\d+)?-\d+$/
+        - /^v20\d{2}\.\d{2}(\.\d+)?(-\d+)?$/
 after_deploy:
   - cd /var/tmp/rakudo-pkg; export FILE=`ls -1 *.deb`; curl -T $FILE -unxadm:$BINTRAY_API "https://api.bintray.com/content/nxadm/perl6-doc/rakudo-pkg-for-doc/${RAKUDO_VERSION}-${REVISION}/pool/main/r/rakudo-pkg-for-doc/$FILE;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
