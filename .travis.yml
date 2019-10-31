@@ -17,30 +17,30 @@ install:
   - sudo apt-get -q update
   - sudo apt-get install -q -y $DEPS
   - wget https://rakudo.perl6.org/downloads/rakudo/rakudo-$VERSION.tar.gz
-  - mkdir /var/tmp/rakudo && tar xzf *.tar.gz -C /var/tmp/rakudo --strip=1
-  - cd /var/tmp
+  - mkdir -p /work/rakudo /pkg && tar xzf *.tar.gz -C /work/rakudo --strip=1
+  - cd /work
   - git clone --depth=1 $DOCREPO
   - git clone --depth=1 $ZEFREPO
   - sudo /usr/bin/gem install --no-ri --no-rdoc fpm executable-hooks
   - find /home/travis -name fpm -type f -exec ls -la {} \;
 script:
-  - cd /var/tmp/rakudo
+  - cd /work/rakudo
   - sudo perl ./Configure.pl --prefix=$PREFIX --backend=moar --gen-moar
   - sudo make
   - sudo make
   - sudo make install
   - perl6 -v
-  - cd /var/tmp/zef && sudo /opt/rakudo-pkg-for-doc/bin/perl6 -Ilib bin/zef install -to=core .
+  - cd /work/zef && sudo /opt/rakudo-pkg-for-doc/bin/perl6 -Ilib bin/zef install -to=core .
   - sudo ln -s $PREFIX/share/perl6/core/bin/zef $PREFIX/bin/zef
-  - cd /var/tmp/doc && sudo env "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --verbose --deps-only install .
-  - export FPM=$(ls -1 /home/travis/.rvm/gems/ruby-*/gems/fpm-*/bin/fpm) && cd / && sudo $FPM --deb-no-default-config-files --license 'Artistic License 2.0' --description 'Rakudo Perl 6 runtime for perl6/doc CI' --input-type dir --output-type deb --package /var/tmp --name rakudo-pkg-for-doc --maintainer "$MAINTAINER" --version $VERSION --iteration $REVISION --url 'https://perl6.org' --architecture native $PREFIX
-before_deploy: sudo chown -R travis:travis /home/travis /var/tmp/* $TRAVIS_BUILD_DIR && cd /
+  - cd /work/doc && sudo env "PATH=$PATH" /opt/rakudo-pkg-for-doc/bin/zef --verbose --deps-only install .
+  - export FPM=$(ls -1 /home/travis/.rvm/gems/ruby-*/gems/fpm-*/bin/fpm) && cd / && sudo $FPM --deb-no-default-config-files --license 'Artistic License 2.0' --description 'Rakudo Perl 6 runtime for perl6/doc CI' --input-type dir --output-type deb --package /pkg --name rakudo-pkg-for-doc --maintainer "$MAINTAINER" --version $VERSION --iteration $REVISION --url 'https://perl6.org' --architecture native $PREFIX
+before_deploy: sudo chown -R travis:travis /home/travis /pkg/* $TRAVIS_BUILD_DIR && cd /
 deploy:
   provider: releases
   api_key:
     secure: XMh+KeGDsqCHc74mFGHZiazSjbIA0BtZVk5CZxwv5A45uWmFHrvR0SJOEVDHcgvWAX465B0tDAheh1aHiF89DsUE3GbumkOQ697XrlgCLMfMaXIinI37oGrID/l6eIYIA5mh5GU6W9UUogOxldQzzZb123aeAW7LwxSssNf6hQoy+4vq2ffgJVesR09E/3tt4ZvT9swGoskKZIGM1hftfSdV+82N/pGJZk4ylH7ab5ZuQX3lbL3MZH5L4jZHJfahmA1uK0pwKluhcwVi2SSAYCd8KMRFwJVynnF9YKUCYACt7fxLbY6ZgTY5BmNKNebbbQckRLyw2UjR2G46oYtlZGXOhquM/N1atlZkUSqr62rSmyceYJGpZJ+hWc2s2d4xvxUc1gnaFJUEYXP98ANS4iFHUrzMHHORHARw9dPxQi+mPS73OdbHlfb8MGFksRUfZFwcF3/kltCOeBU/Yb6zhnA5gdTn9OoHwl6xxlArKSpGiMBBmGdkAlBfW1Xz7tCMUyaDSEz+206ibTpTOotudPbYgXY1PnTtaxBCZiNDgS0qb/1MFSlbZjCI0sWd/y/Fe5UXgy8Ov9/t0HTfK6ejaFJ0ek+otTU7R4LxSdtQz4Dm8e8L4QT4+TDY2Vfrpbo0D5FnHj3fvl/pFSE9Ntarbs+N3+bNKKp8jRYSr7BZRZc=
   file_glob: true
-  file: "/var/tmp/*"
+  file: "/pkg/*"
   skip_cleanup: true
   on:
     repo: nxadm/rakudo-pkg-for-doc
